@@ -1,0 +1,101 @@
+{% extends 'default.html' %}
+{% load humanize %}
+
+{% block title %}Video List{% endblock %}
+
+{% block body %}
+<div class="container-fluid py-4">
+
+    <!-- Page Header -->
+    <div class="row mb-4">
+        <div class="col">
+            <h2 class="text-info-emphasis fw-bold">YouTube Videos</h2>
+            <p class="text-body-secondary">{{ page_obj.paginator.count }} videos total</p>
+        </div>
+    </div>
+
+    <!-- Video Cards Grid -->
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 g-4">
+        {% for content in page_obj %}
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0 bg-dark-subtle">
+                <img src="{{ content.video.image_url }}" class="card-img-top" alt="{{ content.video_id.title }}"
+                    style="object-fit: cover; height: 180px;">
+                <div class="card-body d-flex flex-column">
+                    <h6 class="card-title text-info-emphasis fw-semibold">{{ content.video_id.title|truncatewords:10 }}
+                    </h6>
+                    <p class="text-body-secondary small mb-1">
+                        <i class="bi bi-person-circle"></i> {{ content.video_id.channel_title }}
+                    </p>
+                    <p class="text-body-secondary small mb-2">
+                        <i class="bi bi-calendar3"></i> {{ content.video_id.published_at|date:"M d, Y" }}
+                    </p>
+                    {% if content.video.description %}
+                    <p class="card-text text-body-secondary small flex-grow-1">
+                        {{ content.video.description|truncatewords:20 }}
+                    </p>
+                    {% else %}
+                    <p class="card-text text-body-secondary small flex-grow-1">
+                        No video comment.
+                    </p>
+                    {% endif %}
+                    <div class="mt-auto pt-2 border-top border-secondary">
+                        <span class="badge bg-info text-dark">
+                            <i class="bi bi-eye"></i> {{ content.view_count|intcomma }} views
+                        </span>
+                        <span class="badge bg-success ms-1">
+                            <i class="bi bi-hand-thumbs-up"></i> {{ content.like_count|intcomma }} likes
+                        </span>
+                        <span class="badge bg-secondary ms-1">
+                            <i class="bi bi-chat"></i> {{ content.comment_count|intcomma }} comments
+                        </span>
+                    </div>
+                </div>
+                <div class="card-footer bg-transparent border-secondary">
+                    <a href="{% url 'youtubeApi:video_details' video=content.video_id %}" class="btn btn-sm btn-outline-dark w-100">View Details</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    <div class="row mt-5">
+        <div class="row mb-4">
+            <div class="col">
+                <p class="text-body-secondary">Showing {{page_obj.start_index}} - {{page_obj.end_index}} of {{ page_obj.paginator.count }} total videos</p>
+            </div>
+        </div>
+        <div class="col d-flex justify-content-center">
+            <nav aria-label="Page navigation">
+                <ul class="pagination pagination-sm">
+                    {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1">&laquo; First</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                    </li>
+                    {% endif %}
+
+                    <li class="page-item active">
+                        <span class="page-link">
+                            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                        </span>
+                    </li>
+
+                    {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

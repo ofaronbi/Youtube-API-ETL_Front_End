@@ -1,0 +1,106 @@
+{% extends 'default.html' %}
+{% load humanize %}
+
+{% block title %}{{ video_details.video.title }}{% endblock %}
+
+{% block body %}
+<div style="min-height: 100vh; background: linear-gradient(135deg, #000428, #004e92);">
+    <div class="container py-5">
+
+        <!-- Back Button -->
+        <div class="row mb-4">
+            <div class="col">
+                <a href="{% url 'youtubeApi:video_list' %}" class="btn btn-outline-light btn-sm">
+                    <i class="bi bi-arrow-left"></i> Back to Videos
+                </a>
+            </div>
+        </div>
+
+        <!-- Video Header -->
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <img src="{{ video_details.video.image_url }}" class="img-fluid rounded shadow-lg w-100"
+                    style="object-fit: cover; max-height: 250px;" alt="{{ video_details.video.title }}">
+            </div>
+            <div class="col-md-8 d-flex flex-column justify-content-center mt-3 mt-md-0">
+                <h2 class="text-white fw-bold">{{ details.video.title }}</h2>
+                <p class="text-white-50 mb-1">
+                    <i class="bi bi-person-circle text-info"></i> Creator: {{ video_details.video.channel_title }}
+                </p>
+                <p class="text-white-50 mb-1">
+                    <i class="bi bi-calendar3 text-info"></i> Published: {{ video_details.video.published_at|date:"M d, Y" }}
+                </p>
+                <p class="text-white-50 mb-3">
+                    <i class="bi bi-clock text-info"></i> Duration: {{ video_details.video.duration }}
+                </p>
+
+                <!-- Stats Badges -->
+                <div class="d-flex flex-wrap gap-2">
+                    <span class="badge fs-6 px-3 py-2"
+                        style="background: rgba(13,202,240,0.15); border: 1px solid rgba(13,202,240,0.3); color: #0dcaf0;">
+                        <i class="bi bi-eye"></i> {{ video_details.view_count|intcomma }} Views
+                    </span>
+                    <span class="badge fs-6 px-3 py-2"
+                        style="background: rgba(25,135,84,0.15); border: 1px solid rgba(25,135,84,0.3); color: #198754;">
+                        <i class="bi bi-hand-thumbs-up"></i> {{ video_details.like_count|intcomma }} Likes
+                    </span>
+                    <span class="badge fs-6 px-3 py-2"
+                        style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: #adb5bd;">
+                        <i class="bi bi-chat-dots"></i> {{ video_details.comment_count|intcomma }} Comments
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <hr class="border-white border-opacity-10">
+
+        <!-- Description & Snapshot -->
+        <div class="row g-4 mt-2">
+
+            <!-- Description -->
+            <div class="col-md-8">
+                <div class="p-4 rounded shadow"
+                    style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
+                    <h5 class="text-white fw-semibold mb-3">
+                        <i class="bi bi-file-text text-info"></i> Description
+                    </h5>
+                    {% if video_details.video.description %}
+                    <p class="text-white-50" style="line-height: 1.8;">
+                        {{ video_details.video.description }}
+                    </p>
+                    {% else %}
+                    <p class="text-white-50" style="line-height: 1.8;">
+                        No description.
+                    </p>
+                    {% endif %}
+                    <a href="https://www.youtube.com/watch?v={{ video_details.video.video_id }}" target="_blank"
+                        class="btn btn-m btn-danger">
+                        <i class="bi bi-youtube"></i> Watch on YouTube 
+                    </a>
+                </div>
+            </div>
+
+            <!-- Snapshot Info -->
+            <div class="col-md-4">
+                <div class="p-4 rounded shadow h-100"
+                    style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
+                    <h5 class="text-white fw-semibold mb-3">
+                        <i class="bi bi-calendar-check text-info"></i> Snapshot Info
+                    </h5>
+                    <p class="text-white-50 small text-uppercase fw-semibold mb-1">Snapshot Date</p>
+                    <p class="text-white mb-3">{{ video_details.snapshot_date|date:"M d, Y" }}</p>
+
+                    <p class="text-white-50 small text-uppercase fw-semibold mb-1">Video ID</p>
+                    <p class="text-info small mb-3" style="word-break: break-all;">{{ video_details.video.video_id }}
+                    </p>
+
+                    <p class="text-white-50 small text-uppercase fw-semibold mb-1">Channel</p>
+                    <p class="text-white mb-0">{{ video_details.video.channel_title }}</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+{% endblock %}
