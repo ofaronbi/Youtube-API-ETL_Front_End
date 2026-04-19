@@ -1,0 +1,14 @@
+[project]
+name = "front-end"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "black>=26.3.1",
+    "dj-database-url>=3.1.2",
+    "django>=5.2.13",
+    "dotenv>=0.9.9",
+    "psycopg2-binary>=2.9.11",
+    "python-dotenv>=1.2.2",
+]

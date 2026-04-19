@@ -1,0 +1,80 @@
+{% extends 'default.html' %}
+
+{% block title %}Playlist IDs{% endblock %}
+
+{% block body %}
+<div style="min-height: 100vh; background: linear-gradient(135deg, #000428, #004e92);">
+    <div class="container py-5">
+
+        <div class="row mb-5">
+            <div class="col text-center">
+                <h1 class="fw-bold text-white">
+                    <i class="bi bi-collection-play-fill text-danger"></i> YouTube Playlists
+                </h1>
+                <p class="text-white-50 fs-5">
+                    {{ playlist_id|length }} playlist{{ playlist_id|length|pluralize }} found
+                </p>
+                <hr class="border-info border-opacity-25 w-25 mx-auto">
+            </div>
+        </div>
+
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 justify-content-center">
+            {% for playlist in playlist_id %}
+            <div class="col">
+                <div class="card h-100 border-0 shadow-lg text-white"
+                     style="background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1) !important;">
+
+                    <!-- Card Header -->
+                    <div class="card-header border-0 d-flex align-items-center gap-2"
+                         style="background: rgba(255,255,255,0.08);">
+                        <i class="bi bi-youtube text-danger fs-5"></i>
+                        <span class="fw-semibold text-uppercase small tracking-wide text-white-50">Playlist</span>
+                    </div>
+
+                    <div class="card-body px-4 py-3">
+
+                        <div class="mb-3">
+                            <p class="text-white-50 small text-uppercase fw-semibold mb-1">
+                                <i class="bi bi-hash"></i> Playlist ID
+                            </p>
+                            <p class="fw-bold text-info mb-0">{{ playlist.id }}</p>
+                        </div>
+
+                        <hr class="border-white border-opacity-10 my-2">
+
+                        <div class="mb-3">
+                            <p class="text-white-50 small text-uppercase fw-semibold mb-1">
+                                <i class="bi bi-broadcast"></i> Channel ID
+                            </p>
+                            <p class="small text-white mb-0">{{ playlist.channel_id }}</p>
+                        </div>
+
+                        <hr class="border-white border-opacity-10 my-2">
+
+                        <div class="mb-1">
+                            <p class="text-white-50 small text-uppercase fw-semibold mb-1">
+                                <i class="bi bi-upload"></i> Uploads ID
+                            </p>
+                            <p class="small text-white mb-0">{{ playlist.uploads_id }}</p>
+                        </div>
+
+                    </div>
+
+                    <div class="card-footer border-0 d-flex justify-content-between align-items-center px-4 py-3"
+                         style="background: rgba(255,255,255,0.03);">
+                        <span class="text-white-50 small">
+                            <i class="bi bi-clock-history"></i> Last refreshed: {{ playlist.call_date }}
+                        </span>
+                        <a href="{% url 'youtubeApi:video_list' %}" class="btn btn-sm btn-outline-info rounded-pill px-3">
+                            View <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+</div>
+{% endblock %}
