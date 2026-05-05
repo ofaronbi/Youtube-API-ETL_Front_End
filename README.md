@@ -1,6 +1,6 @@
 Built an end-to-end data engineering project that extracts video statistics from the YouTube Data API, orchestrates the ETL pipeline with Dagster, and serves the processed data through a Django web application. The stack is deployed on Microsoft Azure with a Neon serverless PostgreSQL database, demonstrating skills in data engineering, backend web development, and cloud deployment.
 
-**URL**:  http://127.0.0.1:8000/youtube-api/video_list/
+**URL**:  http://20.57.131.234/youtube-api/video_list/
 
 **STEPS TO CREATE A REACHABLE URL**
 Using Azure VM
